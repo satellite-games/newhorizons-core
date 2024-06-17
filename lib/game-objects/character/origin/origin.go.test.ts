@@ -14,10 +14,16 @@ describe('apply', () => {
 
   it('should apply the origin to the character', () => {
     const origin = new CharacterOrigin(characterOriginMocks.simple);
-    const selectedSkillBonuses: Partial<Record<CharacterSkillName, number>> = {
-      'character.skill.spaceships': 1,
-      'character.skill.biology-and-medicine': -1,
-    };
+    const selectedSkillBonuses: { value: number; name: CharacterSkillName }[] = [
+      {
+        value: 1,
+        name: 'character.skill.spaceships',
+      },
+      {
+        value: -1,
+        name: 'character.skill.biology-and-medicine',
+      },
+    ];
 
     // Ensure that the origin has not been applied yet
     expect(character.general.originName).toBeFalsy();

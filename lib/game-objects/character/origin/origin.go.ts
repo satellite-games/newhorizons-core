@@ -43,7 +43,7 @@ export class CharacterOrigin extends GameObject {
    */
   apply(
     character: Character,
-    selectedSkillBonuses: Partial<Record<CharacterSkillName, number>>,
+    selectedSkillBonuses: { value: number; name: CharacterSkillName }[],
     firstLanguage: string,
   ): void {
     character.general.originName = this.name;
@@ -72,15 +72,15 @@ export class CharacterOrigin extends GameObject {
     }
 
     // Apply selected skill bonuses
-    for (const [skillName, bonus] of Object.entries(selectedSkillBonuses)) {
-      const blueprint = characterSkills.find((blueprint) => blueprint.name === skillName);
+    for (const selectedSkillBonus of selectedSkillBonuses) {
+      const blueprint = characterSkills.find((blueprint) => blueprint.name === selectedSkillBonus.name);
       if (!blueprint) {
-        throw new Error(`Skill '${skillName}' not found.`);
+        throw new Error(`Skill '${selectedSkillBonus.name}' not found.`);
       }
       let skill = new CharacterSkill({ ...blueprint });
       skill = skill.addToCharacter(character);
-      skill.min += bonus;
-      skill.changeValue(bonus);
+      skill.min += selectedSkillBonus.value;
+      skill.changeValue(selectedSkillBonus.value);
     }
 
     // Apply first language
