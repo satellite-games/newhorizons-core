@@ -4,6 +4,7 @@ import { characterOriginMocks } from './origin.blueprint-mocks';
 import { CharacterOrigin } from './origin.go';
 import { characterSkills, type CharacterSkillName } from '../skill';
 import { CharacterAbility } from '../ability';
+import { PrimaryAttribute } from '../primary-attribute';
 
 describe('apply', () => {
   let character: Character;
@@ -28,9 +29,22 @@ describe('apply', () => {
     // Ensure that the origin has not been applied yet
     expect(character.general.originName).toBeFalsy();
 
-    expect(character.getPrimaryAttribute('character.primary-attribute.cleverness').current).toBe(8);
-    expect(character.getPrimaryAttribute('character.primary-attribute.cleverness').min).toBe(8);
-    expect(character.getPrimaryAttribute('character.primary-attribute.cleverness').max).toBe(14);
+    expect(
+      character
+        .getPrimaryAttribute('character.primary-attribute.cleverness')
+        .getModifiedValue<PrimaryAttribute>('current'),
+    ).toBe(8);
+    expect(
+      character
+        .getPrimaryAttribute('character.primary-attribute.cleverness')
+        .getModifiedValue<PrimaryAttribute>('start'),
+    ).toBe(8);
+    expect(
+      character.getPrimaryAttribute('character.primary-attribute.cleverness').getModifiedValue<PrimaryAttribute>('min'),
+    ).toBe(8);
+    expect(
+      character.getPrimaryAttribute('character.primary-attribute.cleverness').getModifiedValue<PrimaryAttribute>('max'),
+    ).toBe(14);
 
     expect(character.getChildren('character.skill').length).toBe(
       characterSkills.filter((skill) => skill.isCoreSkill).length,
@@ -50,9 +64,22 @@ describe('apply', () => {
     // Ensure that the origin has been applied
     expect(character.general.originName).toBe(characterOriginMocks.simple.name);
 
-    expect(character.getPrimaryAttribute('character.primary-attribute.cleverness').current).toBe(9);
-    expect(character.getPrimaryAttribute('character.primary-attribute.cleverness').min).toBe(9);
-    expect(character.getPrimaryAttribute('character.primary-attribute.cleverness').max).toBe(15);
+    expect(
+      character
+        .getPrimaryAttribute('character.primary-attribute.cleverness')
+        .getModifiedValue<PrimaryAttribute>('current'),
+    ).toBe(9);
+    expect(
+      character
+        .getPrimaryAttribute('character.primary-attribute.cleverness')
+        .getModifiedValue<PrimaryAttribute>('start'),
+    ).toBe(9);
+    expect(
+      character.getPrimaryAttribute('character.primary-attribute.cleverness').getModifiedValue<PrimaryAttribute>('min'),
+    ).toBe(9);
+    expect(
+      character.getPrimaryAttribute('character.primary-attribute.cleverness').getModifiedValue<PrimaryAttribute>('max'),
+    ).toBe(15);
 
     expect(character.getChildren('character.skill').length).toBe(
       characterSkills.filter((skill) => skill.isCoreSkill).length + 2,

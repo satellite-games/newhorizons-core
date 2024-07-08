@@ -1,5 +1,5 @@
-import { GameObject } from '@satellite-games/orbit';
-import type { CharacterPrimaryAttributeName } from '@/game-objects/character/primary-attribute';
+import { GameObject, Modifier } from '@satellite-games/orbit';
+import { PrimaryAttribute, type CharacterPrimaryAttributeName } from '@/game-objects/character/primary-attribute';
 import type { CharacterOriginName } from './origin.registry';
 import type { Character } from '@/character';
 import { CharacterSkill, characterSkills, type CharacterSkillName } from '../skill';
@@ -54,9 +54,12 @@ export class CharacterOrigin extends GameObject {
       if (!primaryAttribute) {
         throw new Error(`Primary attribute '${primaryAttributeName}' not found.`);
       }
-      primaryAttribute.min += bonus;
-      primaryAttribute.max += bonus;
-      primaryAttribute.changeValue(bonus);
+      const modifier = new Modifier<PrimaryAttribute>({
+        targetName: primaryAttribute.name,
+        keys: ['min', 'max', 'current', 'start'],
+        amount: 1,
+      });
+      character.addModifier(modifier);
     }
 
     // Apply fixed skill bonuses

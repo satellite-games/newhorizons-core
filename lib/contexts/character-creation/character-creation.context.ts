@@ -1,5 +1,5 @@
 import { Character } from '@/character';
-import { CharacterPreset, type Blueprint } from '@/main';
+import { CharacterOrigin, CharacterPreset, type Blueprint, type CharacterSkillName } from '@/main';
 
 /**
  * The context for the character creation process. This context is used to store the character
@@ -25,5 +25,22 @@ export class CharacterCreationContext {
 
   get originSelected() {
     return !!this.character.general.originName;
+  }
+
+  /**
+   * Applies the origin to the character. Cannot be called a second time.
+   * @param blueprint The origin blueprint to apply.
+   * @param selectedSkillBonuses The selected skill bonuses that the user has chosen.
+   * @param firstLanguage The first language that the user has chosen.
+   */
+  applyOrigin(
+    blueprint: Blueprint<CharacterOrigin>,
+    selectedSkillBonuses: { value: number; name: CharacterSkillName }[],
+    firstLanguage: string,
+  ) {
+    if (this.originSelected) throw new Error('Origin has already been selected.');
+    const origin = new CharacterOrigin(blueprint);
+    origin.apply(this.character, selectedSkillBonuses, firstLanguage);
+    this.character.general.originName = origin.name;
   }
 }
