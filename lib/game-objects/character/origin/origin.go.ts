@@ -57,7 +57,7 @@ export class CharacterOrigin extends GameObject {
       const modifier = new Modifier<PrimaryAttribute>({
         targetName: primaryAttribute.name,
         keys: ['min', 'max', 'current', 'start'],
-        amount: 1,
+        amount: bonus,
       });
       character.addModifier(modifier);
     }
