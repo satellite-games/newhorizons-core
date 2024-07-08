@@ -19,9 +19,9 @@ export interface CharacterGeneralData {
    */
   originName: string;
   /**
-   * The character's sex.
+   * The character's gender or sex.
    */
-  sex: string;
+  gender: string;
   /**
    * The character's age.
    */

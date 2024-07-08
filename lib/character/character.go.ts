@@ -26,7 +26,7 @@ export class Character extends GameObject {
   general: CharacterGeneralData = {
     name: '',
     originName: '',
-    sex: '',
+    gender: '',
     age: 0,
     birthday: '',
     height: 0,
